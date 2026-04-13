@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CryptoIntel — Live Crypto Dashboard</title>
+    <meta name="description"
+        content="Real-time cryptocurrency intelligence dashboard with market data, watchlist, and analytics.">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+    <div id="app">
+
+        <div class="app-layout">
+
+            <!-- ===== SIDEBAR ===== -->
+            <aside class="sidebar" id="sidebar">
+
+                <div class="sidebar-logo">
+                    <h1>CryptoIntel</h1>
+                    <span class="logo-tag">PRO</span>
+                </div>
+
+                <nav class="sidebar-nav">
+                    <p class="nav-section-label">MAIN MENU</p>
+                    <ul>
+                        <li>
+                            <a href="#" class="nav-item active" id="nav-dashboard" data-view="dashboard">
+                                <span class="nav-icon">
+                                    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <rect x="3" y="3" width="7" height="7"></rect>
+                                        <rect x="14" y="3" width="7" height="7"></rect>
+                                        <rect x="14" y="14" width="7" height="7"></rect>
+                                        <rect x="3" y="14" width="7" height="7"></rect>
+                                    </svg>
+                                </span>
+                                <span class="nav-label">Dashboard</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="nav-item" id="nav-markets" data-view="markets">
+                                <span class="nav-icon">
+                                    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
+                                    </svg>
+                                </span>
+                                <span class="nav-label">Markets</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="nav-item" id="nav-watchlist" data-view="watchlist">
+                                <span class="nav-icon">
+                                    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <polygon
+                                            points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2">
+                                        </polygon>
+                                    </svg>
+                                </span>
+                                <span class="nav-label">Watchlist</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="nav-item" id="nav-analytics" data-view="analytics">
+                                <span class="nav-icon">
+                                    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <line x1="18" y1="20" x2="18" y2="10"></line>
+                                        <line x1="12" y1="20" x2="12" y2="4"></line>
+                                        <line x1="6" y1="20" x2="6" y2="14"></line>
+                                    </svg>
+                                </span>
+                                <span class="nav-label">Analytics</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+
+                <div class="sidebar-footer">
+                    <div class="sidebar-status">
+                        <span class="status-dot"></span>
+                        <span>Live Data</span>
+                    </div>
+                    <span class="sidebar-time" id="sidebar-time"></span>
+                </div>
+
+            </aside>
+
+            <!-- ===== MAIN CONTENT ===== -->
+            <div class="main-content">
+
+                <!-- TOP NAV -->
+                <header class="top-nav">
+                    <div class="search-container">
+                        <input type="text" id="search-input" placeholder="Search cryptocurrency by name..."
+                            autocomplete="off">
+                        <div id="search-results" class="search-dropdown hidden"></div>
+                    </div>
+                    <div class="nav-actions">
+                        <button id="theme-toggle" class="theme-toggle-btn" title="Toggle Theme">
+                            <svg class="sun-icon" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="12" cy="12" r="5"></circle>
+                                <line x1="12" y1="1" x2="12" y2="3"></line>
+                                <line x1="12" y1="21" x2="12" y2="23"></line>
+                                <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                                <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                                <line x1="1" y1="12" x2="3" y2="12"></line>
+                                <line x1="21" y1="12" x2="23" y2="12"></line>
+                                <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                                <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                            </svg>
+                            <svg class="moon-icon" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                            </svg>
+                        </button>
+                    </div>
+                </header>
+
+                <!-- DASHBOARD -->
+                <main class="dashboard">
+
+                    <!-- Smart Insights Panel -->
+                    <div id="insights-panel" class="insights-panel"></div>
+
+                    <!-- Market Direction Banner -->
+                    <div id="summary-bar" class="summary-bar"></div>
+
+                    <!-- Watchlist Section -->
+                    <div id="watchlist-wrapper" class="hidden">
+                        <h2 class="section-title">⭐ Your Watchlist</h2>
+                        <div id="watchlist-grid" class="coins-grid"></div>
+                    </div>
+
+                    <!-- Markets Header -->
+                    <div class="dashboard-header">
+                        <div class="header-left">
+                            <h2>Top Markets</h2>
+                            <select id="sort-select" class="sort-select">
+                                <option value="rank">Sort: Rank</option>
+                                <option value="price_desc">Price: High → Low</option>
+                                <option value="price_asc">Price: Low → High</option>
+                                <option value="change_desc">Top Gainers</option>
+                                <option value="change_asc">Top Losers</option>
+                            </select>
+                        </div>
+                        <div class="refresh-status">
+                            <span id="last-updated" class="last-updated-text">—</span>
+                            <button class="icon-btn" id="refresh-btn" title="Refresh data">
+                                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                    <polyline points="23 4 23 10 17 10"></polyline>
+                                    <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Coins Grid -->
+                    <div id="coins-grid" class="coins-grid"></div>
+
+                </main>
+            </div>
+            <!-- end .main-content -->
+
+        </div>
+        <!-- end .app-layout -->
+
+        <!-- Full-page Loader -->
+        <div id="main-loader" class="full-loader">
+            <div class="loader-content">
+                <div class="spinner"></div>
+                <p class="loader-text">Fetching live market data…</p>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- ===== MODAL ===== -->
+    <div id="detail-modal" class="modal hidden">
+
+        <div id="modal-backdrop" class="modal-backdrop"></div>
+
+        <div class="modal-content">
+
+            <button id="close-modal" class="close-btn" title="Close">✕</button>
+
+            <div class="modal-body">
+
+                <div id="modal-loader" class="modal-spinner-wrap hidden">
+                    <div class="spinner"></div>
+                </div>
+
+                <div id="modal-data" class="hidden">
+
+                    <div class="modal-header">
+                        <div class="coin-identity">
+                            <img id="detail-icon" class="detail-icon" src="" alt="">
+                            <div>
+                                <h2 id="detail-name"></h2>
+                                <span id="detail-symbol" class="badge"></span>
+                            </div>
+                        </div>
+                        <div class="coin-price-info">
+                            <div id="detail-price" class="detail-price"></div>
+                            <div id="detail-change" class="detail-change"></div>
+                        </div>
+                    </div>
+
+                    <!-- Time Filters -->
+                    <div class="chart-controls">
+                        <button class="time-btn active" data-days="1">1D</button>
+                        <button class="time-btn" data-days="7">7D</button>
+                        <button class="time-btn" data-days="30">30D</button>
+                    </div>
+
+                    <!-- Chart -->
+                    <div class="chart-container">
+                        <canvas id="price-chart"></canvas>
+                    </div>
+
+                    <!-- Analytics Row -->
+                    <div class="analytics">
+                        <div class="stat-box">
+                            <span>Period High</span>
+                            <strong id="stat-high">—</strong>
+                        </div>
+                        <div class="stat-box">
+                            <span>Period Low</span>
+                            <strong id="stat-low">—</strong>
+                        </div>
+                        <div class="stat-box">
+                            <span>Period Change</span>
+                            <strong id="stat-change">—</strong>
+                        </div>
+                    </div>
+
+                    <!-- Extra Stats -->
+                    <div class="extra-stats">
+                        <div class="stat-box">
+                            <span>Market Cap</span>
+                            <strong id="detail-mcap"></strong>
+                        </div>
+                        <div class="stat-box">
+                            <span>24h Volume</span>
+                            <strong id="detail-vol"></strong>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <div id="toast-container" class="toast-container"></div>
+</body>
+
+</html>
